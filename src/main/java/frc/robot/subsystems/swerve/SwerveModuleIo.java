@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public interface SwerveModuleIo {
     void setSpeed(double speed);
@@ -27,4 +29,13 @@ public interface SwerveModuleIo {
     double getSteerMotorVelocity();
 
     double getDriveMotorVelocity();
+
+    default SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(getDistanceTraveled(), getAngle());
+    }
+
+    default void setState(SwerveModuleState state){
+        setAngle(state.angle);
+        setSpeed(state.speedMetersPerSecond);
+    }
 }
